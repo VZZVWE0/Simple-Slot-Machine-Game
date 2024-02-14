@@ -1,44 +1,102 @@
+//
+//TEAM LIST: ANNA FELIPE
+//
 import java.util.Scanner;
 import java.util.Random;
-
 public class SlotMachine {
+    int credits = 100;
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
+
         Random rand = new Random();
-        int tokens = 100;
-        System.out.println("Credits: " + tokens + "🎟" );
         Scanner input = new Scanner(System.in);
-        String slot1[] = {"🍒", "🎲", "💰", "💎"};
-        int slot2[] = {1};
-        int slot3[] = {1};
-        //🍒", "🎲", "💰", "💎"};
 
+        char selection;
 
+        SlotMachine method = new SlotMachine();
 
-        int num = rand.nextInt(slot1.length) + 1;
+        System.out.print("|"); method.credits(); System.out.println("|");
+        System.out.println("----------------------------------------");
 
-        System.out.println(num);
+        do {
+            System.out.println("Enter S to spin(-20 credits) or Q to Quit: ");
+            selection = input.next().charAt(0);
+            if (selection == 'Q') {
+                System.out.println("Thanks for playing.");
+                break;
+            }
 
-        System.out.print(slot1[new Random().nextInt(slot1.length)]);
-        System.out.print(slot2[new Random().nextInt(slot2.length)]);
-        System.out.println(slot3[new Random().nextInt(slot3.length)]);
+            int slot1 = rand.nextInt(3) + 1;
+            int slot2 = rand.nextInt(3) + 1;
+            int slot3 = rand.nextInt(3) + 1;
 
-        if (slot1 == slot2) {
-            tokens += 50;
-            System.out.println(tokens);
-        }
-        if (slot1 == slot2 && slot1 == slot3) {
-            tokens += 100;
-            System.out.println(tokens);
-        }
-        else {
+            switch (slot1) {
+                case 1: System.out.print("🍒");
+                break;
+                case 2: System.out.print("🎲");
+                 break;
+               case 3: System.out.print("💎");
+                break;
+            }
+            switch (slot2) {
+                case 1: System.out.print("🍒");
+                    break;
+                case 2: System.out.print("🎲");
+                    break;
+                case 3: System.out.print("💎");
+                    break;
+            }
+            switch (slot3) {
+                case 1: System.out.print("🍒");
+                    break;
+                case 2: System.out.print("🎲");
+                    break;
+                case 3: System.out.print("💎");
+                    break;
+            }
+            System.out.println();
 
-            tokens -= 20;
-            System.out.println(tokens);
-        }
+            //System.out.println("(" + slot1 + "(" + slot2 + "(" + slot3 + "/");
 
+            if (slot1 == slot2 && slot1 == slot3 && slot2 == slot3) {
+                System.out.println("You won 100 credits.      |Total: " + method.bigWin() + "🪙|");
+                System.out.println("----------------------------------------");
+            }
+            else if (slot1 == slot2 && slot1 != slot3 && slot2 != slot3) {
+                System.out.println("You won 50 credits.       |Total: " + method.smallWin() + "🪙|");
+                System.out.println("----------------------------------------");
+            } else {
+                System.out.println("                           |Total: " + method.lose() + "🪙|");
+                System.out.println("----------------------------------------");
+            }
+
+        } while (selection == 'S');
 
     }
+    public void credits() {
 
+        System.out.print("Credits: " + credits + "🪙");
+
+    }
+    public int smallWin() {
+
+        credits += 30;
+        return credits;
+    }
+    public int bigWin() {
+
+        credits += 80;
+        return credits;
+    }
+    public int lose() {
+
+        credits -= 20;
+        if (credits < 20) {
+            System.out.println("Not enough credits.");
+            System.exit(0);
+        }
+        return credits;
+
+    }
 
 }
